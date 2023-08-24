@@ -6,15 +6,17 @@ using UnityEngine;
 public class MouseDownAction : MonoBehaviour
 {
     private bool _isHoldingLMB;
+    private bool _canPerformAction = true;
     [SerializeField] private Animator _hamster;
     [SerializeField] private Animator _hamsterWheel;
     [SerializeField] private ElectricityMeter _electricityMeter;
     public bool IsHoldingLMB { get { return _isHoldingLMB; } set { _isHoldingLMB = value; } }
-
+    public bool CanPerformAction {  get { return _canPerformAction; } set { _canPerformAction = value; } }
+    public Animator Hamster { get { return _hamster; } set { _hamster = value; } }
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(_canPerformAction && Input.GetMouseButtonDown(0))
         {
             _isHoldingLMB = true;
             Debug.Log("Play");
@@ -30,7 +32,7 @@ public class MouseDownAction : MonoBehaviour
 
     void HamsterRun()
     {
-        if (_isHoldingLMB)
+        if (_isHoldingLMB && _canPerformAction)
         {
             PlayRunAnimation();
         }
@@ -38,6 +40,11 @@ public class MouseDownAction : MonoBehaviour
         else
         {
             StopAnimation();
+        }
+
+        if(!_canPerformAction)
+        {
+            DizzyAnim();
         }
     }
 
@@ -55,8 +62,8 @@ public class MouseDownAction : MonoBehaviour
         _hamster.SetBool("isResting", true);
     }
 
-    void FillMeter()
+    void DizzyAnim()
     {
-
+        _hamster.SetBool("isTired", true);
     }
 }
