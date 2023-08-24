@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Energy : MonoBehaviour
+public class Energy : Electricity
 {
-    [SerializeField] private Slider energyMeter;
+    [SerializeField] private Slider _energyMeter;
 
-    public void SetMaxEnergy(int fill)
+    public override void SetMaxFill(int fill)
     {
-        energyMeter.maxValue = fill;
-        energyMeter.value = fill;
+        _energyMeter.maxValue = fill;
+        _energyMeter.value = fill;
     }
 
-    public void SetEnergyMeter(int fill)
+    public override void SetFill(int fill)
     {
-        energyMeter.value = fill;
+        _energyMeter.value = fill;
     }
+
 }

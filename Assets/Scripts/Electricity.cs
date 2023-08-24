@@ -7,13 +7,13 @@ public class Electricity : MonoBehaviour
 {
     [SerializeField] private Slider _electricityMeter;
 
-    public void SetMaxEnergy(int fill)
+    public virtual void SetMaxFill(int fill)
     {
         _electricityMeter.maxValue = fill;
         _electricityMeter.value = fill;
     }
 
-    public void SetEnergyMeter(int fill)
+    public virtual void SetFill(int fill)
     {
         _electricityMeter.value = fill;
     }

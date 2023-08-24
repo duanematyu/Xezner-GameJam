@@ -4,21 +4,12 @@ using UnityEngine;
 
 public class HamsterRest : MonoBehaviour
 {
-    [SerializeField] private MouseDownAction mouseDownAction;
-    [SerializeField] private EnergyMeter energyMeter;
-    [SerializeField] private float addEnergy = .5f;
+    [SerializeField] private EnergyMeter _energyMeter;
+    [SerializeField] private float _addEnergy = .5f;
 
-    // Update is called once per frame
-    void Update()
+ 
+    public void EnergyAddition()
     {
-        if (!mouseDownAction.IsHoldingLMB && energyMeter.CurrentEnergy < energyMeter.MaxEnergy)
-        {
-            EnergyAddition();
-        }
-    }
-
-    void EnergyAddition()
-    {
-        energyMeter.EnergyMeterAddition(addEnergy);
+        _energyMeter.FillMeterAddition(_addEnergy);
     }
 }
