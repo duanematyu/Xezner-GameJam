@@ -6,7 +6,10 @@ public class HumanGuard : MonoBehaviour
 {
     [SerializeField] private float _sleepTime;
     [SerializeField] private float _wakeTime;
-    private float _timeHolder;
+    private float _minsleepTimeHolder = 3f;
+    private float _maxsleepTimeHolder = 5f;
+    private float _minwakeTimeHolder = 1f;
+    private float _maxwakeTimeHolder = 2f;
 
     [SerializeField] private bool _isAwake;
 
@@ -14,11 +17,10 @@ public class HumanGuard : MonoBehaviour
 
     public MouseDownAction MouseDownAction;
 
-    //[SerializeField] private float _timer = Time.deltaTime;
-
     private void Start()
     {
-      _timeHolder = _sleepTime;
+        _wakeTime = Random.Range(_minwakeTimeHolder, _maxwakeTimeHolder);
+        _sleepTime = Random.Range(_minsleepTimeHolder, _maxsleepTimeHolder);
     }
 
     public void Update()
@@ -31,7 +33,6 @@ public class HumanGuard : MonoBehaviour
         _humanAnim.SetBool("isAwake", false);
         if (_sleepTime >= 0)
         {
-            _wakeTime = _timeHolder;
             _isAwake = false;
             _sleepTime -= Time.deltaTime;
             Debug.Log("Sleep");
@@ -52,41 +53,33 @@ public class HumanGuard : MonoBehaviour
         }
         else
         {
-            ResetTime();
+            ResetSleepTime();
+            ResetWakeTime();
         }
 
         if (_isAwake)
         {
             if (!MouseDownAction.IsHoldingLMB)
             {
-                Debug.Log("game over");
-                GameManager.Instance.GameOverBool = true;
-                GameObject.Find("Guy").GetComponent<HumanGuard>().enabled = false;
+                GameOver();
             }
         }
     }
 
-    void ResetTime()
+    void GameOver()
     {
-        _sleepTime = _timeHolder;
+        Debug.Log("game over");
+        GameManager.Instance.GameOverBool = true;
+        GameObject.Find("Guy").GetComponent<HumanGuard>().enabled = false;
     }
 
-   /* public void WakeUp()
+    void ResetSleepTime()
     {
-        if(_sleepTime < 0)
-        {
-            _sleepTime -= Time.deltaTime;
-            if (_sleepTime <= 0)
-            {
-                _isAwake = true;
-            }
-            Debug.Log("Wake Up");
-            if(_isAwake)
-            {
-                if (!MouseDownAction.IsHoldingLMB)
-                {
-                    Debug.Log("game over");
-                }
-            }
-        }*/
+        _sleepTime = Random.Range(_minsleepTimeHolder, _maxsleepTimeHolder);
+    }
+
+    void ResetWakeTime()
+    {
+        _wakeTime = Random.Range(_minwakeTimeHolder, _maxwakeTimeHolder);
+    }
 }
